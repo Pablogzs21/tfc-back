@@ -15,16 +15,18 @@ public class CorsGlobalConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        // Ajusta los orígenes según tu entorno (añade producción cuando toque)
-        config.setAllowedOrigins(List.of(
-            "http://localhost:5173",   // Vite (React)
-            "http://localhost:3000"    // opcional (otros dev servers)
+        config.setAllowedOriginPatterns(List.of(
+                "http://localhost:5173",
+                "http://localhost:3000",
+                "https://*.vercel.app",
+                "https://tfc-back-bhg1.onrender.com" 
         ));
+
         config.setAllowCredentials(true);
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
-        // Si necesitas exponer headers (p. ej. Authorization, Location)
         config.setExposedHeaders(List.of("Authorization","Location"));
+        config.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
